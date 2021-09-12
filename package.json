@@ -1,0 +1,67 @@
+{
+  "name": "@vasiliscsc/deployer",
+  "version": "0.1.0",
+  "description": "NPM package enabling easy deployment of docker images over ssh",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "dev": "concurrently -k \"tsc -w\" \"nodemon -e ts,js,json --watch ./src/**/* --exec ts-standard\"",
+    "prepare": "npm run build",
+    "format": "ts-standard --fix",
+    "engines": "ls-engines --mode ideal --production --save --current false",
+    "build": " tsc --build --clean",
+    "docs": "typedoc --out docs ./src",
+    "lint": "ts-standard",
+    "packlist": "npm-packlist",
+    "prepublishOnly": "npm run format && npm ci && npm run engines && npm run build && npm run lint && npm run packlist"
+  },
+  "bin": {
+    "deployerts": "./dist/src/index.js"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vasiliscsc/deployer.git"
+  },
+  "keywords": [
+    "Deployer",
+    "Docker",
+    "SSH",
+    "Swarm",
+    "Registry"
+  ],
+  "author": "Vasilis Nicolaou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vasiliscsc/deployer/issues"
+  },
+  "homepage": "https://github.com/vasiliscsc/deployer#readme",
+  "dependencies": {
+    "commander": "^8.1.0",
+    "node-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@microsoft/tsdoc": "^0.13.2",
+    "@types/node": "^16.7.13",
+    "concurrently": "^6.2.1",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "ls-engines": "^0.5.0",
+    "nodemon": "^2.0.12",
+    "npm-packlist": "^3.0.0",
+    "prettier": "^2.4.0",
+    "ts-standard": "^10.0.0",
+    "typedoc": "^0.22.3",
+    "typescript": "^4.4.2"
+  },
+  "ts-standard": {
+    "plugins": [
+      "eslint-plugin-tsdoc"
+    ],
+    "project": "./tsconfig.json"
+  },
+  "engines": {
+    "node": "^16 || ^14.13.1 || ^12.20"
+  }
+}
