@@ -9,8 +9,8 @@ import { LogLevel } from '../utils'
  * i.e. `process.env.DEPLOYER_LOG_LEVEL = "4"`.
  * If nothing in the environment sets the log level, it defaults to `"4"`.
  *
- * @param thisCommand Parent commander Command.
- * @param actionCommand Child commander subcommand Command.
+ * @param thisCommand - Parent commander Command.
+ * @param actionCommand - Child commander subcommand Command.
  */
 export function setLogLevelHook (thisCommand: Command, actionCommand: Command): void {
   const deployerOptions = thisCommand.opts()
