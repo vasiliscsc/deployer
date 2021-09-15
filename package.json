@@ -5,13 +5,13 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
-    "dev": "concurrently -k \"tsc -w\" \"nodemon -e ts,js,json --watch ./src/**/* --exec ts-standard\"",
+    "dev": "concurrently -k \"tsc -w\" \"nodemon -e ts,js,json --watch ./src/**/* --exec eslint .\"",
     "prepare": "npm run build",
-    "format": "ts-standard --fix",
+    "format": "eslint . --fix && ts-standard --fix",
     "engines": "ls-engines --mode ideal --production --save --current false",
     "build": " tsc --build --clean",
     "docs": "typedoc --out docs ./src",
-    "lint": "ts-standard",
+    "lint": "eslint . && ts-standard",
     "packlist": "npm-packlist",
     "prepublishOnly": "npm run format && npm ci && npm run engines && npm run build && npm run lint && npm run packlist"
   },
@@ -62,9 +62,6 @@
     "typescript": "^4.4.3"
   },
   "ts-standard": {
-    "plugins": [
-      "eslint-plugin-tsdoc"
-    ],
     "project": "./tsconfig.json"
   },
   "engines": {
