@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { Logger } from '../utils'
+import { LogLevel } from '../utils'
 
 /**
  * Commander lifecycle hook for setting the log level in the environment
@@ -15,12 +15,12 @@ import { Logger } from '../utils'
 export function setLogLevelHook (thisCommand: Command, actionCommand: Command): void {
   const deployerOptions = thisCommand.opts()
   if (deployerOptions.logLevel !== undefined) {
-    process.env.DEPLOYER_LOG_LEVEL = Logger.LogLevel[deployerOptions.logLevel]
+    process.env.DEPLOYER_LOG_LEVEL = LogLevel[deployerOptions.logLevel]
     return
   }
   if (deployerOptions.quiet !== undefined) {
-    process.env.DEPLOYER_LOG_LEVEL = Logger.LogLevel.FATAL.toString()
+    process.env.DEPLOYER_LOG_LEVEL = LogLevel.FATAL.toString()
     return
   }
-  process.env.DEPLOYER_LOG_LEVEL = Logger.LogLevel.INFO.toString()
+  process.env.DEPLOYER_LOG_LEVEL = LogLevel.INFO.toString()
 }
