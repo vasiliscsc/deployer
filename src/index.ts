@@ -12,14 +12,10 @@ const logLevelOption = new Option(
   .choices(['OFF', 'FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
   .argParser(InputParsing.parseInputToLogLevel)
 const quietOption = new Option('-q, --quiet', 'Run the command with only critical logs.')
-const deployerOptions: Option[] = new Array<Option>(logLevelOption, quietOption)
+const options: Option[] = new Array<Option>(logLevelOption, quietOption)
 
-const program = new Command()
-program.name('deployer')
-
-deployerOptions.forEach((opt: Option) => {
-  program.addOption(opt)
-})
+const program = new Command('deployer')
+options.forEach((option: Option) => program.addOption(option))
 
 program
   .version(packageJson.version, '-v, --version', 'Display version installed.')
