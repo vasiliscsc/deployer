@@ -13,8 +13,8 @@ import { LogLevel } from '../utils'
  * @param input - Input from the CLI by the user for the log level.
  * @returns A string matching one of the options in the LogLevel enum.
  */
-export function parseInputToLogLevel (input: string): string {
-  var intParsedInput: number = parseInt(input)
+export function parseInputToLogLevel(input: string): string {
+  const intParsedInput: number = parseInt(input)
   if (isNaN(intParsedInput)) {
     if (input.toUpperCase() in LogLevel) {
       return input.toUpperCase()
