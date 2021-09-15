@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import { LogLevel } from '../utils'
 
 /**
- * Commander lifecycle hook for setting the log level in the environment
+ * Commander lifecycle hook for setting the log level in the environment.
  *
  * @remarks
  * The log level is stored in `process.env.DEPLOYER_LOG_LEVEL`. It is therefore stored as a string with a numerical value
