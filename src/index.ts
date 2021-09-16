@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { Command, Option } from 'commander'
-import { setLogLevelHook } from './hooks'
+import { checkForUpdatesHook, setLogLevelHook } from './hooks'
 import { Logger, InputParsing } from './utils'
-import packageJson from '../package.json'
+import { version } from '../package.json'
 
 const logLevelOption = new Option(
   '-l, --log-level <logLevel>',
@@ -18,10 +18,11 @@ const program = new Command('deployer')
 options.forEach((option: Option) => program.addOption(option))
 
 program
-  .version(packageJson.version, '-v, --version', 'Display version installed.')
+  .version(version, '-v, --version', 'Display version installed.')
   .helpOption('-h, --help', 'Display command help.')
 
 program.hook('preAction', setLogLevelHook)
+program.hook('preAction', checkForUpdatesHook)
 
 program.action(() => {
   Logger.fatal('This must be seen if loglevel is FATAL or higher.')

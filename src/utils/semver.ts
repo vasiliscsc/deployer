@@ -10,7 +10,7 @@
  * @param semverString - A string matching SemVer scheme.
  * @returns True if the provided string matches the SemVer pattern.
  */
-export function validateSemver (semverString: string): boolean {
+export function validator (semverString: string): boolean {
   const reg =
     /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/gm
   return reg.test(semverString)
@@ -30,7 +30,7 @@ export function validateSemver (semverString: string): boolean {
  *
  * @returns 1 if `a>b`, -1 if `a<b` and 0 if `a===b`
  */
-export function semverComparator (a: string, b: string): 1 | 0 | -1 {
+export function comparator (a: string, b: string): 1 | 0 | -1 {
   // Precedence MUST be calculated by separating the version into major, minor, patch and pre-release identifiers in that order (Build metadata does not figure into precedence).
   const rx =
     /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/m
