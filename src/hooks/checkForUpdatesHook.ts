@@ -43,10 +43,9 @@ export async function checkForUpdatesHook (
   thisCommand: Command,
   actionCommand: Command
 ): Promise<void> {
-  Logger.debug('Checking for updates...')
   const remoteVersion: string = await getRemoteVersion()
-  Logger.debug({ localVersion, remoteVersion })
-  if (SemVer.comparator(localVersion, remoteVersion) === -1) {
+  const sv1 = new SemVer(localVersion)
+  if (sv1.isSmallerThan(remoteVersion)) {
     Logger.info(`Update available ${localVersion} -> ${remoteVersion}`)
   }
 }
