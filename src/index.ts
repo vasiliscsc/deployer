@@ -2,8 +2,9 @@
 
 import { Command, Option } from 'commander'
 import { checkForUpdatesHook, setLogLevelHook } from './hooks'
-import { Logger, InputParsing } from './utils'
+import { InputParsing } from './utils'
 import { version } from '../package.json'
+import { Logger } from './logger'
 
 const logLevelOption = new Option(
   '-l, --log-level <logLevel>',

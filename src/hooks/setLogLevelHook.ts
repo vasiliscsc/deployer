@@ -1,5 +1,5 @@
 import { Command } from 'commander'
-import { LogLevel } from '../utils'
+import { LogLevel } from '../logger'
 
 /**
  * Commander lifecycle hook for setting the log level in the environment.

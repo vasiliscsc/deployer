@@ -1,7 +1,8 @@
+import fetch from 'node-fetch'
 import { version as localVersion } from '../../package.json'
 import { Command } from 'commander'
-import { Logger, SemVer } from '../utils'
-import fetch from 'node-fetch'
+import { SemVer } from '../utils'
+import { Logger } from '../logger'
 
 /**
  * Fetches the package.json of the master branch from Deployer's repository and parses its contents into an object.

@@ -1,5 +1,5 @@
 import { InvalidArgumentError } from 'commander'
-import { LogLevel } from '../utils'
+import { LogLevel } from '../logger'
 
 /**
  * Parses log level input from the user in the CLI.
