@@ -40,11 +40,9 @@ export function isLogLevelSilent (logLevel: LogLevel | LogLevelStrings): boolean
  * @param logLevel - Log level used to determine whether the items should be logged.
  * @param printFunc - The function used to print given items.
  */
-function print (printList: any[], logLevel: LogLevel, printFunc: (printItem: any) => void): void {
+function print (printList: any[], logLevel: LogLevel, printFunc: (...printItem: any) => void): void {
   if (!isLogLevelSilent(logLevel)) {
-    printList.forEach((printItem) => {
-      printFunc(printItem)
-    })
+    printFunc(...printList)
   }
 }
 
