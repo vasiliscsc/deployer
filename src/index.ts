@@ -1,41 +1,40 @@
 #!/usr/bin/env node
 
 import { Command, Option } from 'commander'
-import { checkForUpdatesHook, setLogLevelHook } from './hooks'
+import { DeployerPreActionHooks } from './hooks'
+import DeployerCommands from './commands'
 import { InputParsing } from './utils'
 import { version } from '../package.json'
 import { Logger } from './logger'
 
 const logLevelOption = new Option(
   '-l, --log-level <logLevel>',
-  'The log level for the deployer command. Accepts numerical value between 0-6 or one of the choices.'
+  'The log level for the deployer command. Accepts 0-6 or choice:'
 )
   .choices(['OFF', 'FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
   .argParser(InputParsing.parseInputToLogLevel)
 const quietOption = new Option('-q, --quiet', 'Run the command with only critical logs.')
-const options: Option[] = new Array<Option>(logLevelOption, quietOption)
+const DeployerOptions: Option[] = new Array<Option>(logLevelOption, quietOption)
 
 const program = new Command('deployer')
-options.forEach((option: Option) => program.addOption(option))
-
+program.description(
+  'CLI entrypoint for deployer. For the full documentation visit https://github.com/vasiliscsc/deployer#readme.'
+)
+DeployerOptions.forEach((deployerOption: Option) => program.addOption(deployerOption))
+DeployerPreActionHooks.forEach((preActionHook) => program.hook('preAction', preActionHook))
+DeployerCommands.forEach((deployerCommand) =>
+  program.addCommand(deployerCommand.command, deployerCommand.commandOptions)
+)
 program
   .version(version, '-v, --version', 'Display version installed.')
   .helpOption('-h, --help', 'Display command help.')
 
-program.hook('preAction', setLogLevelHook)
-program.hook('preAction', checkForUpdatesHook)
-
 program.action(() => {
-  Logger.fatal('This must be seen if loglevel is FATAL or higher.')
-  Logger.error('This must be seen if loglevel is ERROR or higher.')
-  Logger.warn('This must be seen if loglevel is WARN or higher.')
-  Logger.info('This must be seen if loglevel is INFO or higher.')
-  Logger.debug('This must be seen if loglevel is DEBUG or higher.')
-  Logger.trace('This must be seen if loglevel is TRACE or higher.')
-  throw new Error('Test error')
+  program.help()
 })
 
 program.parseAsync(process.argv).catch((e: Error) => {
   Logger.fatal(e.message)
   Logger.debug(e.stack)
+  process.exit(1)
 })
