@@ -29,7 +29,7 @@ program
   .version(version, '-v, --version', 'Display version installed.')
   .helpOption('-h, --help', 'Display command help.')
 
-program.action(() => {
+program.action((options, command: Command) => {
   program.help()
 })
 

@@ -1,0 +1,5 @@
+{
+  "name": "deployer",
+  "logLevel": "INFO",
+  "checkForUpdates": true
+}

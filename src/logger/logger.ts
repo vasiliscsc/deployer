@@ -1,5 +1,5 @@
 import { Console } from 'console'
-import { LogLevel, LogLevelStrings } from './types'
+import { LogLevel, LogLevelString } from './types'
 
 const deployerConsole = new Console({
   stdout: process.stdout,
@@ -17,7 +17,7 @@ const deployerConsole = new Console({
  * @param logLevel - The log level to check its verbosity.
  * @returns True if provided log level is silent.
  */
-export function isLogLevelSilent (logLevel: LogLevel | LogLevelStrings): boolean {
+export function isLogLevelSilent (logLevel: LogLevel | LogLevelString): boolean {
   if (typeof logLevel === 'string') {
     if (Object.keys(LogLevel).includes(logLevel)) {
       logLevel = LogLevel[logLevel]
@@ -44,6 +44,20 @@ function print (printList: any[], logLevel: LogLevel, printFunc: (...printItem: 
   if (!isLogLevelSilent(logLevel)) {
     printFunc(...printList)
   }
+}
+
+/**
+ * Prints the items given in the `printList` using {@link LogLevel.OUTPUT}.
+ *
+ * @remarks
+ * This print method will send its output to stdout.
+ *
+ * @see {@link print}
+ *
+ * @param printList - One or more items to print to the console.
+ */
+export function output (...printList: any[]): void {
+  print(printList, LogLevel.FATAL, deployerConsole.log)
 }
 
 /**

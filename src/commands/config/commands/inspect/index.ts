@@ -1,3 +1,3 @@
-import inspect from './inspect'
+import command from './command'
 
-export default inspect
+export default command
