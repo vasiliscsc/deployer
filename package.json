@@ -10,7 +10,7 @@
     "prepare": "npm run build",
     "format": "eslint . --fix && ts-standard --fix",
     "engines": "ls-engines --mode ideal --production --save --current false",
-    "build": "tsc --build --clean && tsc",
+    "build": "rimraf ./dist && tsc",
     "docs": "typedoc --out docs ./src",
     "lint": "eslint . && ts-standard",
     "packlist": "npm-packlist",
