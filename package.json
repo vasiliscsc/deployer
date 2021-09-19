@@ -42,13 +42,14 @@
   "dependencies": {
     "@types/node-fetch": "^2.5.12",
     "commander": "^8.2.0",
+    "dotenv": "^10.0.0",
     "js-yaml": "^4.1.0",
     "node-fetch": "^2.6.2"
   },
   "devDependencies": {
     "@microsoft/tsdoc": "^0.13.2",
     "@types/js-yaml": "^4.0.3",
-    "@types/node": "^16.9.1",
+    "@types/node": "^16.9.4",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "concurrently": "^6.2.1",
     "eslint": "^7.32.0",
@@ -63,7 +64,7 @@
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "ts-standard": "^10.0.0",
-    "typedoc": "^0.22.3",
+    "typedoc": "^0.22.4",
     "typescript": "^4.4.3"
   },
   "ts-standard": {
