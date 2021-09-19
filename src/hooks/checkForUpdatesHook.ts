@@ -3,7 +3,7 @@ import { version as localVersion } from '../../package.json'
 import { Command } from 'commander'
 import { SemVer } from '../utils'
 import { Logger } from '../logger'
-import * as env from '../env'
+import { env } from '../env'
 
 /**
  * Fetches the package.json of the master branch from Deployer's repository and parses its contents into an object.

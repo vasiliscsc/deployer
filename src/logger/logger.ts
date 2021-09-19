@@ -1,5 +1,5 @@
 import { Console } from 'console'
-import * as env from '../env'
+import { env } from '../env'
 import { LogLevel, LogLevelString, castStringToLogLevelString } from './types'
 
 const deployerConsole = new Console({
