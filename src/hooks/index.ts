@@ -1,7 +1,6 @@
-import { setLogLevelHook } from './setLogLevelHook'
 import { checkForUpdatesHook } from './checkForUpdatesHook'
-import { loadDeployerConfigHook } from './loadDeployerConfigHook'
+import { configureEnvironmentHook } from './configureEnvironmentHook'
 
-const DeployerPreActionHooks = [loadDeployerConfigHook, setLogLevelHook, checkForUpdatesHook]
+const DeployerPreActionHooks = [configureEnvironmentHook, checkForUpdatesHook]
 
 export { DeployerPreActionHooks }

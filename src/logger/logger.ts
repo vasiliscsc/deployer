@@ -1,5 +1,6 @@
 import { Console } from 'console'
-import { LogLevel, LogLevelString } from './types'
+import * as env from '../env'
+import { LogLevel, LogLevelString, castStringToLogLevelString } from './types'
 
 const deployerConsole = new Console({
   stdout: process.stdout,
@@ -23,18 +24,19 @@ export function isLogLevelSilent (logLevel: LogLevel | LogLevelString): boolean 
       logLevel = LogLevel[logLevel]
     }
   }
-  if (process.env.DEPLOYER_LOG_LEVEL === undefined) {
+  const envLogLevel = env.getLogLevel()
+  if (envLogLevel === undefined) {
     return LogLevel.FATAL < logLevel
   }
 
-  return parseInt(process.env.DEPLOYER_LOG_LEVEL) < logLevel
+  return LogLevel[castStringToLogLevelString(envLogLevel)] < logLevel
 }
 
 /**
  * Prints all items in the `printList` using the given `printFunc` if the environment's log level is higher or equal to given `log level`.
  *
  * @remarks
- * This function is a utility function used by the log functions exported by the logger {@link fatal}, {@link error}, {@link warn}, {@link info}, {@link debug}, {@link trace}
+ * This function is a utility function used by the log functions exported by the logger {@link fatal}, {@link output}, {@link error}, {@link warn}, {@link info}, {@link debug}, {@link trace}
  *
  * @param printList - List of items to be printed to the outputstream.
  * @param logLevel - Log level used to determine whether the items should be logged.

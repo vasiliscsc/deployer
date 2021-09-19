@@ -3,6 +3,7 @@ import { version as localVersion } from '../../package.json'
 import { Command } from 'commander'
 import { SemVer } from '../utils'
 import { Logger } from '../logger'
+import * as env from '../env'
 
 /**
  * Fetches the package.json of the master branch from Deployer's repository and parses its contents into an object.
@@ -44,6 +45,11 @@ export async function checkForUpdatesHook (
   thisCommand: Command,
   actionCommand: Command
 ): Promise<void> {
+  if (!env.getCheckForUpdates()) {
+    Logger.debug('Skipping check for updates.', { checkForUpdates: env.getCheckForUpdates() })
+    return
+  }
+  Logger.debug('Checking for updates...', { checkForUpdates: env.getCheckForUpdates() })
   const remoteVersion: string = await getRemoteVersion()
   const sv1 = new SemVer(localVersion)
   if (sv1.isSmallerThan(remoteVersion)) {

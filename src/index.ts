@@ -6,6 +6,9 @@ import DeployerCommands from './commands'
 import { InputParsing } from './utils'
 import { version } from '../package.json'
 import { Logger } from './logger'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const logLevelOption = new Option(
   '-l, --log-level <logLevel>',
@@ -13,8 +16,25 @@ const logLevelOption = new Option(
 )
   .choices(['OFF', 'FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE'])
   .argParser(InputParsing.parseInputToLogLevel)
-const quietOption = new Option('-q, --quiet', 'Run the command with only critical logs.')
-const DeployerOptions: Option[] = new Array<Option>(logLevelOption, quietOption)
+  .env('DEPLOYER_LOG_LEVEL')
+const nameOption = new Option('--name <name>', 'The alias used when tagging deployed images.')
+  .env('DEPLOYER_NAME')
+  .hideHelp()
+const checkForUpdatesOption = new Option(
+  '--check-for-updates <checkForUpdates>',
+  'Sets whether the command should check for updates before executing.'
+)
+  .choices(['TRUE', 'FALSE'])
+  .argParser((value, previous) => {
+    return value.toUpperCase()
+  })
+  .env('DEPLOYER_CHECK_FOR_UPDATES')
+  .hideHelp()
+const DeployerOptions: Option[] = new Array<Option>(
+  logLevelOption,
+  nameOption,
+  checkForUpdatesOption
+)
 
 const program = new Command('deployer')
 program.description(
@@ -29,10 +49,8 @@ program
   .version(version, '-v, --version', 'Display version installed.')
   .helpOption('-h, --help', 'Display command help.')
 
-program.action((options, command: Command) => {
-  program.help()
-})
-
+program.enablePositionalOptions()
+program.showSuggestionAfterError(true)
 program.parseAsync(process.argv).catch((e: Error) => {
   Logger.fatal(e.message)
   Logger.debug(e.stack)

@@ -1,6 +1,10 @@
-import { Command } from 'commander'
+import fs from 'fs'
+import yaml from 'js-yaml'
 import { DeployerConfig } from './type'
+import { deployerConfigFilePath } from './constants'
 
-export function getDeployerConfigFromCommand (command: Command): DeployerConfig {
-  return command.processedArgs[command.processedArgs.length - 1]
+export function readDeployerConfig (): DeployerConfig {
+  const deployerConfigFileText = fs.readFileSync(deployerConfigFilePath, 'utf8')
+  const deployerConfig: any = yaml.load(deployerConfigFileText)
+  return deployerConfig
 }
