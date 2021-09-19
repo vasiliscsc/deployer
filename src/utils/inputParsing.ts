@@ -1,5 +1,6 @@
 import { InvalidArgumentError } from 'commander'
 import path from 'path'
+import { defaultDeployerConfig } from '../config'
 import { isLogLevelString, LogLevel } from '../logger'
 
 /**
@@ -46,4 +47,70 @@ export function parseFilePath (filePath: string): string {
     throw new InvalidArgumentError('Invalid path argument given.')
   }
   return normalizedFilePath
+}
+
+/**
+ * Parses `input` into a deployer config key.
+ *
+ * @throws {@link InvalidArgumentError}
+ * This exception is thrown when the `input` cannot be parsed into a deployer config key.
+ *
+ * @param input - Input from the CLI by the user for a deployer config key.
+ * @returns Matching config key as present in default config.
+ */
+export function parseInputToDeployerConfigKey (input: string): string {
+  const key = Object.keys(defaultDeployerConfig).find(
+    (element) => element.toLowerCase() === input.toLowerCase()
+  )
+  if (key === undefined) {
+    throw new InvalidArgumentError(
+      `Key ${input} is not supported. Accepted keys are:\n${Object.keys(defaultDeployerConfig).join(
+        ', '
+      )}`
+    )
+  }
+  return key
+}
+
+/**
+ * Parses `input` into a valid name.
+ *
+ * @remarks
+ * Name is used as a tag for the images deployed using deployer. As a result the same constaints as docker tag must be used.
+ *
+ * _A tag name must be valid ASCII and may contain lowercase and uppercase letters, digits, underscores, periods and dashes.
+ * A tag name may not start with a period or a dash and may contain a maximum of 128 characters._
+ *
+ * @see {@link https://docs.docker.com/engine/reference/commandline/tag/#extended-description}:
+ *
+ * @throws {@link InvalidArgumentError}
+ * This exception is thrown when the `input` contains characters not accepted by docker tags.
+ *
+ * @param input - Input from the CLI by the user for the name config value.
+ * @returns Sanitized name that is accepted as a docker tag.
+ */
+export function parseInputToName (input: string): string {
+  const rx = /^(?![-.])[a-zA-Z0-9-_.]+$/
+  if (!rx.test(input) || input.length > 128) {
+    throw new InvalidArgumentError(
+      'Name can only contain alphanumeric characters, "-", "_" and ".". It may not start with "." or "-" and may contain a maximum of 128 characters.'
+    )
+  }
+  return input.toLowerCase()
+}
+
+/**
+ * Parses `input` into a boolean.
+ *
+ * @throws {@link InvalidArgumentError}
+ * This exception is thrown when the `input` cannot be parsed into a boolean.
+ *
+ * @param input - Input from the CLI by the user for a boolean value.
+ * @returns Parsed boolean from string.
+ */
+export function parseInputToBoolean (input: string): boolean {
+  if (['true', 'false'].includes(input.toLowerCase())) {
+    return input.toLowerCase() === 'true'
+  }
+  throw new InvalidArgumentError('Input is not a boolean. Boolean expected.')
 }

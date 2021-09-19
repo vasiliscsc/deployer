@@ -19,15 +19,14 @@ const logLevelOption = new Option(
   .env('DEPLOYER_LOG_LEVEL')
 const nameOption = new Option('--name <name>', 'The alias used when tagging deployed images.')
   .env('DEPLOYER_NAME')
+  .argParser(InputParsing.parseInputToName)
   .hideHelp()
 const checkForUpdatesOption = new Option(
   '--check-for-updates <checkForUpdates>',
   'Sets whether the command should check for updates before executing.'
 )
   .choices(['TRUE', 'FALSE'])
-  .argParser((value, previous) => {
-    return value.toUpperCase()
-  })
+  .argParser(InputParsing.parseInputToBoolean)
   .env('DEPLOYER_CHECK_FOR_UPDATES')
   .hideHelp()
 const DeployerOptions: Option[] = new Array<Option>(
