@@ -59,8 +59,9 @@ export function parseFilePath (filePath: string): string {
  * @returns Matching config key as present in default config.
  */
 export function parseInputToDeployerConfigKey (input: string): string {
+  const sanitizedInput = input.replace(/-/g, '')
   const key = Object.keys(defaultDeployerConfig).find(
-    (element) => element.toLowerCase() === input.toLowerCase()
+    (element) => element.toLowerCase() === sanitizedInput.toLowerCase()
   )
   if (key === undefined) {
     throw new InvalidArgumentError(
