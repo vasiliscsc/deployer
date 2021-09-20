@@ -1,6 +1,7 @@
+import chalk from 'chalk'
+import { Argument, Command } from 'commander'
 import fs from 'fs'
 import yaml from 'js-yaml'
-import { Argument, Command } from 'commander'
 import {
   defaultDeployerConfig,
   deployerConfigFilePath,
@@ -40,7 +41,11 @@ command.action((key, value, options, commandMeta: Command) => {
   }
 
   fs.writeFileSync(deployerConfigFilePath, yaml.dump(deployerConfig))
-  Logger.output(`Config key ${key} has been successfully set to ${value}.`)
+  Logger.output(
+    `Config key ${chalk.yellowBright(key)} has been successfully set to ${chalk.yellowBright(
+      value
+    )}.`
+  )
 })
 const deployerCommand: DeployerCommand = { command }
 

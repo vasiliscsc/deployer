@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk'
 import { Command, Option } from 'commander'
+import dotenv from 'dotenv'
 import { DeployerPreActionHooks } from './hooks'
 import DeployerCommands from './commands'
 import { InputParsing } from './utils'
 import { version } from '../package.json'
 import { Logger } from './logger'
-import dotenv from 'dotenv'
 
 dotenv.config()
 
@@ -51,7 +52,7 @@ program
 program.enablePositionalOptions()
 program.showSuggestionAfterError(true)
 program.parseAsync(process.argv).catch((e: Error) => {
-  Logger.fatal(e.message)
-  Logger.debug(e.stack)
+  Logger.fatal(chalk.redBright(e.message))
+  Logger.debug(chalk.gray(e.stack))
   process.exit(1)
 })
