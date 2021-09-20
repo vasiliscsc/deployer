@@ -4,6 +4,8 @@ import { Command } from 'commander'
 import { SemVer } from '../utils'
 import { Logger } from '../logger'
 import { env } from '../env'
+import boxen from 'boxen'
+import chalk from 'chalk'
 
 /**
  * Fetches the package.json of the master branch from Deployer's repository and parses its contents into an object.
@@ -53,6 +55,19 @@ export async function checkForUpdatesHook (
   const remoteVersion: string = await getRemoteVersion()
   const sv1 = new SemVer(localVersion)
   if (sv1.isSmallerThan(remoteVersion)) {
-    Logger.info(`Update available ${localVersion} -> ${remoteVersion}`)
+    Logger.info(
+      boxen(
+        `Update available ${chalk.gray(localVersion)} -> ${chalk.greenBright(
+          remoteVersion
+        )}\nRun ${chalk.cyanBright('npm i -g https://github.com/vasiliscsc/deployer')} to update`,
+        {
+          padding: 1,
+          margin: 1,
+          borderColor: 'yellowBright',
+          textAlignment: 'center',
+          dimBorder: true
+        }
+      )
+    )
   }
 }
