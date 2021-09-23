@@ -7,7 +7,7 @@ import { exec } from './process'
  * @returns The port on which container is exposed on.
  */
 export async function getContainerPort (containerName: string): Promise<number> {
-  const { output, exitCode } = await exec('docker', ['port', containerName])
+  const { output, exitCode } = await exec(`docker port ${containerName}`)
   if (exitCode === 0) {
     const rx = /0.0.0.0:([0-9]+)/g
     const arr = rx.exec(output)
