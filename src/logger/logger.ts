@@ -101,7 +101,7 @@ export function error (...printList: any[]): void {
  * @param printList - One or more items to print to the console.
  */
 export function warn (...printList: any[]): void {
-  print(printList, LogLevel.WARN, deployerConsole.error)
+  print(printList, LogLevel.WARN, deployerConsole.warn)
 }
 
 /**
@@ -115,7 +115,7 @@ export function warn (...printList: any[]): void {
  * @param printList - One or more items to print to the console.
  */
 export function info (...printList: any[]): void {
-  print(printList, LogLevel.INFO, deployerConsole.log)
+  print(printList, LogLevel.INFO, deployerConsole.info)
 }
 
 /**
@@ -129,7 +129,7 @@ export function info (...printList: any[]): void {
  * @param printList - One or more items to print to the console.
  */
 export function debug (...printList: any[]): void {
-  print(printList, LogLevel.DEBUG, deployerConsole.log)
+  print(printList, LogLevel.DEBUG, deployerConsole.debug)
 }
 
 /**
@@ -143,5 +143,5 @@ export function debug (...printList: any[]): void {
  * @param printList - One or more items to print to the console.
  */
 export function trace (...printList: any[]): void {
-  print(printList, LogLevel.TRACE, deployerConsole.log)
+  print(printList, LogLevel.TRACE, deployerConsole.trace)
 }
